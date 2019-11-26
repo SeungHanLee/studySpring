@@ -1,0 +1,7 @@
+# exception_en.yml
+unKnown:
+  code: "-9999"
+  msg: "An unknown error has occured"
+userNotFound:
+  code: "-1000"
+  msg: "this member not exist."

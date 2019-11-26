@@ -1,0 +1,26 @@
+server:
+  port: 8888
+
+#Generic H2
+#org.h2.Driver
+#jdbc:h2:mem:testdb
+#lsh
+
+#properties.hibernate.hbm2ddl.auto: update
+# 시작하면서 도메인 객체 구성과 DB의 스키마를 비교해 필요한 테이블이나 칼럼이 없을때 도메인 객체에 맞춰 DB스키마를 변경
+#showSql: true
+# jpa가 실행하는 쿼리를 console로그로 출력하기위한 설정
+spring:
+  datasource:
+    #url: jdbc:h2:mem:testdb
+    url:  jdbc:h2:~/lshtest
+    driver-class-name: org.h2.Driver
+    username: lsh
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties.hibernate.hbm2ddl.auto: update
+    showSql: true
+  message:
+    basename: i18n/exception
+    encoding: UTF-8
+
