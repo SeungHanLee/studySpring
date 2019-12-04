@@ -23,4 +23,6 @@ spring:
   messages:
     basename: i18n/exception
     encoding: UTF-8
+  jwt:
+    secret: shchlrdh@$test;
 

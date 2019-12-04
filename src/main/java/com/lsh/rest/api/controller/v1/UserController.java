@@ -11,6 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,10 +37,21 @@ public class UserController {
 //      return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(Exception::new));
 //    }
 
+    /* 인증없이 msrl로 단건 조
     @GetMapping(value = "/user/{msrl}")
     public SingleResult<User> findUserById(@PathVariable long msrl){
         // advice/ExceptionAdvice사용 (CUserNotFoundException 사용)
         return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(CUserNotFoundException::new));
+    }
+*/
+    @GetMapping(value = "/user/{msrl}")
+    public SingleResult<User> findUserById(@RequestParam String lang){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String id = authentication.getName();
+        System.out.println("getName :   " + id);
+        long idl = Long.parseLong(id);
+        System.out.println("getName :   " + idl);
+        return responseService.getSingleResult(userJpaRepo.findById(idl).orElseThrow(CUserNotFoundException::new));
     }
 
     @PostMapping(value = "/user")
@@ -49,7 +62,7 @@ public class UserController {
 
     @PutMapping(value = "/user")
     public SingleResult<User> modify(@RequestParam long msrl, @RequestParam String uid, @RequestParam String name) {
-        User user = User.builder().msrl(msrl).uid(uid).name(name).build();
+        User user = User.builder().msrl(msrl).name(name).build();
         return responseService.getSingleResult(userJpaRepo.save(user));
     }
 
