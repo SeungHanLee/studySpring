@@ -34,6 +34,7 @@ public class JwtTokenProvider {
 
     //JWT토큰 생성
     public String createToken(String userPk, List<String> roles) {
+        System.out.println("SecretKey!!!!" + secretKey);
         Claims claims = Jwts.claims().setSubject(userPk);
         claims.put("roles", roles);
         Date now = new Date();
@@ -41,7 +42,8 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidMilisecond))
-                .signWith(SignatureAlgorithm.ES256, secretKey) //암호화 알고리즘, secret값 셋팅
+             //   .signWith(SignatureAlgorithm.ES256, secretKey) //암호화 알고리즘, secret값 셋팅
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 

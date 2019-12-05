@@ -31,6 +31,8 @@ public class SignController {
         User user = userJpaRepo.findByUid(id).orElseThrow(CEmailSigninFailedException::new);
         if (!passwordEncoder.matches(password, user.getPassword()))
             throw new CEmailSigninFailedException();
+    System.out.println("getUserName ::::::::: " + user.getUsername());
+        System.out.println("getRoles" + user.getRoles());
 
         return responseService.getSingleResult(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()));
     }

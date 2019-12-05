@@ -44,14 +44,15 @@ public class UserController {
         return responseService.getSingleResult(userJpaRepo.findById(msrl).orElseThrow(CUserNotFoundException::new));
     }
 */
-    @GetMapping(value = "/user/{msrl}")
+    @GetMapping(value = "/user")
     public SingleResult<User> findUserById(@RequestParam String lang){
+        System.out.println("%%%%%%%%%%%%%%%%%%%%lang" + lang);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
-        System.out.println("getName :   " + id);
-        long idl = Long.parseLong(id);
-        System.out.println("getName :   " + idl);
-        return responseService.getSingleResult(userJpaRepo.findById(idl).orElseThrow(CUserNotFoundException::new));
+        System.out.println("getName %%%%%%%%%%%%%%:   " + id);
+
+       // return responseService.getSingleResult(userJpaRepo.findById(idl).orElseThrow(CUserNotFoundException::new));
+        return responseService.getSingleResult(userJpaRepo.findByUid(id).orElseThrow(CUserNotFoundException::new));
     }
 
     @PostMapping(value = "/user")
